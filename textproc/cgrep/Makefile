@@ -11,12 +11,11 @@ COMMENT=	Context-aware grep for source codes
 
 LICENSE=	GPLv2
 
-USE_CABAL=	aeson ansi-terminal async cmdargs either exceptions regex-pcre \
-		regex-posix safe split stringsearch unicode-show unix-compat \
-		utf8-string yaml
+BUILD_DEPENDS=	cabal:devel/hs-cabal-install
 
-EXECUTABLE=	cgrep
-STANDALONE=	yes
+USES=		tar:xz
 
-.include "${.CURDIR}/../../lang/ghc/bsd.cabal.mk"
+DISTFILES=	${DISTNAME}-builddata${EXTRACT_SUFX}
+
+.include "${.CURDIR}/bsd.new-cabal.mk"
 .include <bsd.port.mk>
