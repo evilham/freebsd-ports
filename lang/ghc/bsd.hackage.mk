@@ -63,7 +63,6 @@ activehs-base_port?=                             devel/hs-activehs-base
 adjunctions_port?=                               math/hs-adjunctions
 aeson_port?=                                     converters/hs-aeson
 aeson-compat_port?=                              converters/hs-aeson-compat
-aeson-pretty_port?=                              converters/hs-aeson-pretty                      # executable
 Agda_port?=                                      math/hs-Agda                                    # executable
 alex_port?=                                      devel/hs-alex                                   # executable
 ALUT_port?=                                      audio/hs-ALUT
