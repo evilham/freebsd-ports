@@ -14,6 +14,8 @@ LIB_DEPENDS+=	libgmp.so:math/gmp \
 
 PLIST_FILES=	bin/${PORTNAME}
 
+.include <bsd.port.options.mk>
+
 # Fetches and unpacks package source from Hackage using only PORTNAME and PORTVERSION.
 cabal-extract:
 	mkdir -p ${WRKDIR}
@@ -54,3 +56,13 @@ do-install:
 	${INSTALL_PROGRAM} \
 		${WRKSRC}/dist-newstyle/build/${GHC_ARCH}-freebsd/ghc-${GHC_VERSION}/${PORTNAME}-${PORTVERSION}/x/${PORTNAME}/build/${PORTNAME}/${PORTNAME} \
 		${STAGEDIR}${PREFIX}/bin/
+
+.	if !empty(INSTALL_PORTDATA)
+		@${MKDIR} ${STAGEDIR}${DATADIR}
+		${INSTALL_PORTDATA}
+.	endif
+
+.	if !empty(INSTALL_PORTEXAMPLES) && ${PORT_OPTIONS:MEXAMPLES}
+		@${MKDIR} ${STAGEDIR}${EXAMPLESDIR}
+		${INSTALL_PORTEXAMPLES}
+.	endif
