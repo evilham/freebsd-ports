@@ -108,7 +108,6 @@ byteorder_port?=                                 devel/hs-byteorder
 bytestring-csv_port?=                            textproc/hs-bytestring-csv
 bytestring-lexing_port?=                         devel/hs-bytestring-lexing
 bytestring-mmap_port?=                           devel/hs-bytestring-mmap
-bytestring-nums_port?=                           devel/hs-bytestring-nums                        # executable
 bytestring-show_port?=                           devel/hs-bytestring-show
 c2hs_port?=                                      devel/hs-c2hs                                   # executable
 cabal-install_port?=                             devel/hs-cabal-install                          # executable

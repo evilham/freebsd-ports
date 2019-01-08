@@ -29,7 +29,7 @@ cabal-extract:
 # Builds them as side-effect.
 cabal-extract-deps:
 	cd ${WRKSRC} && \
-		${SETENV} HOME=${CABAL_HOME} cabal new-configure
+		${SETENV} HOME=${CABAL_HOME} cabal new-configure --flags="${CABAL_FLAGS}"
 	cd ${WRKSRC} && \
 		${SETENV} HOME=${CABAL_HOME} cabal new-build --dependencies-only
 
