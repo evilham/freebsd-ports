@@ -1,5 +1,7 @@
 DISTFILES=	${DISTNAME}-builddata${EXTRACT_SUFX}
 
+EXECUTABLES?=	${PORTNAME}
+
 GHC_VERSION?=	8.6.3
 GHC_ARCH=	${ARCH:S/amd64/x86_64/:C/armv.*/arm/}
 
@@ -12,7 +14,7 @@ USES+=		iconv:translit tar:xz
 LIB_DEPENDS+=	libgmp.so:math/gmp \
 		libffi.so.6:devel/libffi
 
-PLIST_FILES=	bin/${PORTNAME}
+#PLIST_FILES=	bin/${PORTNAME}
 
 .include <bsd.port.options.mk>
 
@@ -53,9 +55,17 @@ do-build:
 		${SETENV} HOME=${CABAL_HOME} cabal new-build --offline
 
 do-install:
-	${INSTALL_PROGRAM} \
-		${WRKSRC}/dist-newstyle/build/${GHC_ARCH}-freebsd/ghc-${GHC_VERSION}/${PORTNAME}-${PORTVERSION}/x/${PORTNAME}/build/${PORTNAME}/${PORTNAME} \
-		${STAGEDIR}${PREFIX}/bin/
+.	for exe in ${EXECUTABLES}
+	if [ -d ${WRKSRC}/dist-newstyle/build/${GHC_ARCH}-freebsd/ghc-${GHC_VERSION}/${PORTNAME}-${PORTVERSION}/x ]; then \
+		${INSTALL_PROGRAM} \
+			${WRKSRC}/dist-newstyle/build/${GHC_ARCH}-freebsd/ghc-${GHC_VERSION}/${PORTNAME}-${PORTVERSION}/x/${PORTNAME}/build/${exe}/${exe} \
+			${STAGEDIR}${PREFIX}/bin/ ;\
+	else \
+		${INSTALL_PROGRAM} \
+			${WRKSRC}/dist-newstyle/build/${GHC_ARCH}-freebsd/ghc-${GHC_VERSION}/${PORTNAME}-${PORTVERSION}/build/${exe}/${exe} \
+			${STAGEDIR}${PREFIX}/bin/ ;\
+	fi
+.	endfor
 
 .	if !empty(INSTALL_PORTDATA)
 		@${MKDIR} ${STAGEDIR}${DATADIR}
@@ -66,3 +76,10 @@ do-install:
 		@${MKDIR} ${STAGEDIR}${EXAMPLESDIR}
 		${INSTALL_PORTEXAMPLES}
 .	endif
+
+.if !target(post-install-script)
+post-install-script:
+.	for exe in ${EXECUTABLES}
+		${ECHO_CMD} 'bin/${exe}' >> ${TMPPLIST}
+.	endfor
+.endif
