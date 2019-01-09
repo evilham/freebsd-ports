@@ -25,6 +25,11 @@ cabal-extract:
 	cd ${WRKDIR} && \
 		${SETENV} HOME=${CABAL_HOME} cabal get ${PORTNAME}-${PORTVERSION}
 
+cabal-patch:
+	for patch in ${PATCHDIR}/pre-makesum-patch*; do \
+		${PATCH} -d ${WRKSRC} -i $${patch} ;\
+	done
+
 # Fetches and unpacks dependencies sources for a cabal-extract'ed package.
 # Builds them as side-effect.
 cabal-extract-deps:
@@ -42,6 +47,7 @@ cabal-makesum:
 	rm -rf ${CABAL_HOME}/.cabal/packages/hackage.haskell.org/01-index.tar.gz
 	rm -rf ${CABAL_HOME}/.cabal/packages/hackage.haskell.org/01-index.tar.idx
 	rm -rf ${WRKSRC}/dist
+	find ${WRKSRC} -name '*.orig' -delete
 
 	tar -C ${WRKDIR} -ca -f /tmp/${PORTNAME}-${PORTVERSION}-builddata.tar.xz ${PORTNAME}-${PORTVERSION} cabal-home
 

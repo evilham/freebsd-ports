@@ -2,20 +2,14 @@
 # $FreeBSD$
 
 PORTNAME=	git-annex
-PORTVERSION=	6.20170520
-PORTREVISION=	4
+PORTVERSION=	7.20181211
 CATEGORIES=	devel haskell
 
 MAINTAINER=	haskell@FreeBSD.org
 COMMENT=	Manage files with git, without checking their contents into git
 
 LICENSE=	GPLv3
-
-USE_CABAL=	hslogger split IfElse QuickCheck SafeSemaphore bloomfilter \
-		concurrent-output disk-free-space edit-distance esqueleto \
-		feed magic network persistent-sqlite regex-tdfa sandi \
-		torrent uuid
-
+# cabal new-build -v
 USES=		gmake perl5
 USE_PERL5=	build
 
@@ -66,8 +60,7 @@ RUN_DEPENDS+=	rsync:net/rsync \
 		git:devel/git \
 		gsha256sum:sysutils/coreutils
 
-EXECUTABLE=	git-annex git-annex-shell git-remote-tor-annex
-STANDALONE=	yes
+EXECUTABLES=	git-annex git-annex-shell git-remote-tor-annex
 
 FLAGS_DEFINE=	S3 ASSISTANT WEBDAV WEBAPP PAIRING PRODUCTION DBUS
 FLAGS_DEFAULT=	S3 ASSISTANT WEBDAV WEBAPP PAIRING PRODUCTION
@@ -82,7 +75,7 @@ WEBDAV_FLAG_CABAL=	DAV
 
 ASSISTANT_DESC=		'assistant' and 'watch' commands
 ASSISTANT_FLAG_ENABLE=	Assistant
-ASSISTANT_FLAG_CABAL=	dns mountpoints hinotify 
+ASSISTANT_FLAG_CABAL=	dns mountpoints hinotify
 
 WEBAPP_DESC=		Web application (requires assistant)
 WEBAPP_FLAG_DEPENDS=	ASSISTANT
@@ -106,5 +99,5 @@ DBUS_FLAG_CABAL=	dbus fdo-notify
 FLAGS_ENABLE=		ConcurrentOutput TorrentParser MagicMime
 FLAGS_DISABLE=		Benchmark TestSuite Android AndroidSplice
 
-.include "${.CURDIR}/../../lang/ghc/bsd.cabal.mk"
+.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>
