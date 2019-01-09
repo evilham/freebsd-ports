@@ -62,15 +62,18 @@ do-build:
 
 do-install:
 .	for exe in ${EXECUTABLES}
-	if [ -d ${WRKSRC}/dist-newstyle/build/${GHC_ARCH}-freebsd/ghc-${GHC_VERSION}/${PORTNAME}-${PORTVERSION}/x ]; then \
-		${INSTALL_PROGRAM} \
-			${WRKSRC}/dist-newstyle/build/${GHC_ARCH}-freebsd/ghc-${GHC_VERSION}/${PORTNAME}-${PORTVERSION}/x/${PORTNAME}/build/${exe}/${exe} \
-			${STAGEDIR}${PREFIX}/bin/ ;\
-	else \
-		${INSTALL_PROGRAM} \
-			${WRKSRC}/dist-newstyle/build/${GHC_ARCH}-freebsd/ghc-${GHC_VERSION}/${PORTNAME}-${PORTVERSION}/build/${exe}/${exe} \
-			${STAGEDIR}${PREFIX}/bin/ ;\
-	fi
+# 	if [ -d ${WRKSRC}/dist-newstyle/build/${GHC_ARCH}-freebsd/ghc-${GHC_VERSION}/${PORTNAME}-${PORTVERSION}/x ]; then \
+# 		${INSTALL_PROGRAM} \
+# 			${WRKSRC}/dist-newstyle/build/${GHC_ARCH}-freebsd/ghc-${GHC_VERSION}/${PORTNAME}-${PORTVERSION}/x/${PORTNAME}/build/${exe}/${exe} \
+# 			${STAGEDIR}${PREFIX}/bin/ ;\
+# 	else \
+# 		${INSTALL_PROGRAM} \
+# 			${WRKSRC}/dist-newstyle/build/${GHC_ARCH}-freebsd/ghc-${GHC_VERSION}/${PORTNAME}-${PORTVERSION}/build/${exe}/${exe} \
+# 			${STAGEDIR}${PREFIX}/bin/ ;\
+# 	fi
+	${INSTALL_PROGRAM} \
+		`find ${WRKSRC}/dist-newstyle -name ${exe} -type f -perm +111` \
+		${STAGEDIR}${PREFIX}/bin/
 .	endfor
 
 .	if !empty(INSTALL_PORTDATA)
