@@ -1,3 +1,3 @@
 TIMESTAMP = 1499544739
-SHA256 (cabal/hjsmin-0.2.0.2.tar.gz) = bec153d2396962c63998eb12d0a2c7c9f7df6f774cb00e41b6cdb1f5a4905484
-SIZE (cabal/hjsmin-0.2.0.2.tar.gz) = 4211
+SHA256 (hjsmin-0.2.0.2-builddata.tar.xz) = a6b45f5babfb2ce1458e18b59533708533c127323bd54e88735d0487cf2d4f8b
+SIZE (hjsmin-0.2.0.2-builddata.tar.xz) = 1626156

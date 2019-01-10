@@ -1,3 +1,3 @@
 TIMESTAMP = 1499452576
-SHA256 (cabal/hasktags-0.69.3.tar.gz) = 4e069aa63c2a7d762332d1acbc12a3d705abdc5e24c06d55129e1a3fd66e5afa
-SIZE (cabal/hasktags-0.69.3.tar.gz) = 62888
+SHA256 (hasktags-0.71.2-builddata.tar.xz) = a5bee7e117d3a8b97f59164504add246b975386b0912ed4719176f5c13e080a4
+SIZE (hasktags-0.71.2-builddata.tar.xz) = 1646648
