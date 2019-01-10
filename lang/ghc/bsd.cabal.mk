@@ -12,8 +12,9 @@
 PACKAGE=	${PORTNAME}-${PORTVERSION}
 
 .if !defined(METAPORT) && !defined(USE_GITHUB)
-MASTER_SITES?=	http://hackage.haskell.org/package/:hackage
-DISTFILES?=	${PACKAGE}/${DISTNAME}${EXTRACT_SUFX}:hackage
+MASTER_SITES?=	http://hackage.haskell.org/package/${PACKAGE}/:hackage
+DISTFILES?=	${DISTNAME}${EXTRACT_SUFX}:hackage
+EXTRACT_ONLY?= ${DISTNAME}${EXTRACT_SUFX}
 .endif
 
 .if defined(METAPORT)

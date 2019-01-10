@@ -34,7 +34,7 @@ cabal-patch:
 # Builds them as side-effect.
 cabal-extract-deps:
 	cd ${WRKSRC} && \
-		${SETENV} HOME=${CABAL_HOME} cabal new-configure --flags="${CABAL_FLAGS}"
+		${SETENV} HOME=${CABAL_HOME} cabal new-configure --flags="${CABAL_FLAGS}" ${CONFIGURE_ARGS}
 	cd ${WRKSRC} && \
 		${SETENV} HOME=${CABAL_HOME} cabal new-build --dependencies-only
 
@@ -58,7 +58,7 @@ cabal-makesum:
 
 do-build:
 	cd ${WRKSRC} && \
-		${SETENV} HOME=${CABAL_HOME} cabal new-build --offline
+		${SETENV} HOME=${CABAL_HOME} cabal new-build --offline ${BUILD_ARGS}
 
 do-install:
 .	for exe in ${EXECUTABLES}
