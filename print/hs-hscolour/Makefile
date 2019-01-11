@@ -2,8 +2,8 @@
 # $FreeBSD$
 
 PORTNAME=	hscolour
-PORTVERSION=	${HSCOLOUR_VERSION}
-PORTREVISION=	2
+PORTVERSION=	1.24.4
+PORTREVISION=	3
 PORTEPOCH=	1
 CATEGORIES=	print haskell
 
@@ -12,7 +12,7 @@ COMMENT=	Colourise Haskell code
 
 LICENSE=	GPLv2
 
-EXECUTABLE=	HsColour
+EXECUTABLES=	HsColour
 
-.include "${.CURDIR}/../../lang/ghc/bsd.cabal.mk"
+.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>
