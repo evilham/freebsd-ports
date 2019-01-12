@@ -14,7 +14,7 @@ PACKAGE=	${PORTNAME}-${PORTVERSION}
 .if !defined(METAPORT) && !defined(USE_GITHUB)
 MASTER_SITES?=	http://hackage.haskell.org/package/${PACKAGE}/:hackage
 DISTFILES?=	${DISTNAME}${EXTRACT_SUFX}:hackage
-EXTRACT_ONLY?= ${DISTNAME}${EXTRACT_SUFX}
+EXTRACT_ONLY?=	${DISTNAME}${EXTRACT_SUFX}
 .endif
 
 .if defined(METAPORT)
@@ -23,7 +23,6 @@ USES+=		metaport
 DIST_SUBDIR?=	cabal
 .endif # !METAPORT
 
-LTS_CONFIG=	${PORTSDIR}/lang/ghc/cabal.config
 USE_LOCALE?=	en_US.UTF-8
 
 MAKE_ENV+=	DESTDIR=${STAGEDIR} TMPDIR=${TMPDIR}
@@ -343,11 +342,3 @@ add-plist-cabal:
 .  endif
 
 .endif # !METAPORT
-
-cabal-fetch:
-	if ! [ -f ${DISTDIR}/${DIST_SUBDIR}/.cabal/config ] ; then \
-		${SETENV} HOME=${DISTDIR}/${DIST_SUBDIR} cabal update ; \
-	fi
-	mkdir -p ${WRKDIR}
-	cd ${WRKDIR} && ${SETENV} HOME=${DISTDIR}/${DIST_SUBDIR} cabal --default-user-config=${LTS_CONFIG} get ${PORTNAME}-${PORTVERSION}
-	${SETENV} HOME=${DISTDIR}/${DIST_SUBDIR} cabal fetch --default-user-config=${LTS_CONFIG} ${PORTNAME}-${PORTVERSION}
