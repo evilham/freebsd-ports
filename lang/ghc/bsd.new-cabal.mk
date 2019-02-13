@@ -1,5 +1,3 @@
-DISTFILES=	${DISTNAME}-builddata${EXTRACT_SUFX}
-
 EXECUTABLES?=	${PORTNAME}
 
 GHC_VERSION?=	8.6.3
@@ -10,10 +8,27 @@ CABAL_HOME=	${WRKDIR}/cabal-home
 BUILD_DEPENDS=	cabal:devel/hs-cabal-install
 
 # Inherited via lang/ghc we need to depend on iconv and libgmp.so (stage q/a)
-USES+=		iconv:translit tar:xz
+USES+=		iconv:translit
 LIB_DEPENDS+=	libgmp.so:math/gmp \
 		libffi.so.6:devel/libffi
 
+DIST_SUBDIR?=	hackage
+
+MASTER_SITES?=	http://hackage.haskell.org/package/${PORTNAME}-${PORTVERSION}/:DEFAULT
+DISTFILES?=     ${PORTNAME}-${PORTVERSION}${EXTRACT_SUFX}
+
+.for package in ${USE_CABAL}
+_PKG_GROUP=		${package:C/[\.-]//g}
+_PKG_WITHOUT_REV=	${package:C/_[0-9]+//}
+_REV=			${package:C/[^_]*//:S/_//}
+MASTER_SITES+=	http://hackage.haskell.org/package/${package:C/_[0-9]+//}/:${package:C/[\.-]//g}
+DISTFILES+=	${package:C/_[0-9]+//}${EXTRACT_SUFX}:${package:C/[\.-]//g}
+# .if ${package:C/[^_]*//:S/_//} != ""
+# MASTER_SITES+=	http://hackage.haskell.org/package/${package:C/_[0-9]+//}/revisions/:${package:C/[\.-]//g}_rev
+# DISTFILES+=	${package:C/[^_]*//:S/_//}
+# .endif
+#EXTRACT_ONLY?=	${DISTNAME}${EXTRACT_SUFX}
+.endfor
 #PLIST_FILES=	bin/${PORTNAME}
 
 .include <bsd.port.options.mk>
@@ -25,11 +40,6 @@ cabal-extract:
 	cd ${WRKDIR} && \
 		${SETENV} HOME=${CABAL_HOME} cabal get ${PORTNAME}-${PORTVERSION}
 
-cabal-patch:
-	for patch in ${PATCHDIR}/pre-makesum-patch*; do \
-		${PATCH} -d ${WRKSRC} -i $${patch} ;\
-	done
-
 # Fetches and unpacks dependencies sources for a cabal-extract'ed package.
 # Builds them as side-effect.
 cabal-extract-deps:
@@ -37,6 +47,29 @@ cabal-extract-deps:
 		${SETENV} HOME=${CABAL_HOME} cabal new-configure --flags="${CABAL_FLAGS}" ${CONFIGURE_ARGS}
 	cd ${WRKSRC} && \
 		${SETENV} HOME=${CABAL_HOME} cabal new-build --dependencies-only
+
+# Generates USE_CABAL= ... line ready to be pasted into the port
+make-use-cabal:
+	@echo ====================
+	@find ${CABAL_HOME} -name '*.conf'| xargs basename | sed -E 's|-[0-9a-z]{64}\.conf||' | xargs echo -n USE_CABAL= && echo
+
+post-extract:
+.	for package in ${USE_CABAL}
+	cd ${WRKDIR} && \
+		mv ${package} ${WRKSRC}/
+.	endfor
+
+# Leftovers from older approaches
+cabal-extract-deps2:
+.	for package in ${USE_CABAL}
+	cd ${WRKSRC} && \
+		${SETENV} HOME=${CABAL_HOME} cabal get ${package}
+.	endfor
+
+cabal-patch:
+	for patch in ${PATCHDIR}/pre-makesum-patch*; do \
+		${PATCH} -d ${WRKSRC} -i $${patch} ;\
+	done
 
 # After fetching dependencies, removes unnecessary stuff from cabal cache and
 # packs it along with WRKSRC into a tar.xz.
@@ -58,7 +91,7 @@ cabal-makesum:
 
 do-build:
 	cd ${WRKSRC} && \
-		${SETENV} HOME=${CABAL_HOME} cabal new-build --offline ${BUILD_ARGS}
+		${SETENV} HOME=${CABAL_HOME} cabal new-build --offline ${BUILD_ARGS} ${PORTNAME}
 
 do-install:
 .	for exe in ${EXECUTABLES}
