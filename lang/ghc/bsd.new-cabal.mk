@@ -12,24 +12,24 @@ USES+=		iconv:translit
 LIB_DEPENDS+=	libgmp.so:math/gmp \
 		libffi.so.6:devel/libffi
 
-DIST_SUBDIR?=	hackage
+DIST_SUBDIR?=	cabal
 
 MASTER_SITES?=	http://hackage.haskell.org/package/${PORTNAME}-${PORTVERSION}/:DEFAULT
 DISTFILES?=     ${PORTNAME}-${PORTVERSION}${EXTRACT_SUFX}
+EXTRACT_ONLY=	${PORTNAME}-${PORTVERSION}${EXTRACT_SUFX}
 
 .for package in ${USE_CABAL}
 _PKG_GROUP=		${package:C/[\.-]//g}
 _PKG_WITHOUT_REV=	${package:C/_[0-9]+//}
 _REV=			${package:C/[^_]*//:S/_//}
-MASTER_SITES+=	http://hackage.haskell.org/package/${package:C/_[0-9]+//}/:${package:C/[\.-]//g}
-DISTFILES+=	${package:C/_[0-9]+//}${EXTRACT_SUFX}:${package:C/[\.-]//g}
-# .if ${package:C/[^_]*//:S/_//} != ""
-# MASTER_SITES+=	http://hackage.haskell.org/package/${package:C/_[0-9]+//}/revisions/:${package:C/[\.-]//g}_rev
-# DISTFILES+=	${package:C/[^_]*//:S/_//}
-# .endif
-#EXTRACT_ONLY?=	${DISTNAME}${EXTRACT_SUFX}
+#MASTER_SITES+=	http://hackage.haskell.org/package/${package:C/_[0-9]+//}/:${package:C/[\.-]//g}
+MASTER_SITES+=	http://hackage.haskell.org/package/:${package:C/[\.-]//g}
+DISTFILES+=	${package:C/_[0-9]+//}/${package:C/_[0-9]+//}${EXTRACT_SUFX}:${package:C/[\.-]//g}
+EXTRACT_ONLY+=	${package:C/_[0-9]+//}/${package:C/_[0-9]+//}${EXTRACT_SUFX}
+.if ${package:C/[^_]*//:S/_//} != ""
+DISTFILES+=	${package:C/_[0-9]+//}/revision/${package:C/[^_]*//:S/_//}.cabal:${package:C/[\.-]//g}
+.endif
 .endfor
-#PLIST_FILES=	bin/${PORTNAME}
 
 .include <bsd.port.options.mk>
 
@@ -51,13 +51,18 @@ cabal-extract-deps:
 # Generates USE_CABAL= ... line ready to be pasted into the port
 make-use-cabal:
 	@echo ====================
-	@find ${CABAL_HOME} -name '*.conf'| xargs basename | sed -E 's|-[0-9a-z]{64}\.conf||' | xargs echo -n USE_CABAL= && echo
+	@find ${CABAL_HOME} -name '*.conf'| xargs basename | sed -E 's|-[0-9a-z]{64}\.conf||' | sort | xargs echo -n USE_CABAL= && echo
 
 post-extract:
 .	for package in ${USE_CABAL}
+.	if ${package:C/[^_]*//:S/_//} != ""
+		cp ${DISTDIR}/${DIST_SUBDIR}/${package:C/_[0-9]+//}/revision/${package:C/[^_]*//:S/_//}.cabal `find ${WRKDIR}/${package:C/_[0-9]+//} -name *.cabal -depth 1`
+.	endif
 	cd ${WRKDIR} && \
-		mv ${package} ${WRKSRC}/
+		mv ${package:C/_[0-9]+//} ${WRKSRC}/
 .	endfor
+	mkdir -p ${CABAL_HOME}/.cabal
+	touch ${CABAL_HOME}/.cabal/config
 
 # Leftovers from older approaches
 cabal-extract-deps2:
