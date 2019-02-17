@@ -11,13 +11,7 @@ COMMENT=	Minimalistic text-based status bar
 
 LICENSE=	BSD3CLAUSE
 
-USE_CABAL=	HTTP>=4000.2.4 async extensible-exceptions mtl>=2.1 regex-compat\
-		X11>=1.6.1 parsec-numbers
 USE_XORG=	xpm
-
-EXECUTABLE=	xmobar
-
-STANDALONE=	yes
 
 OPTIONS_DEFINE=	EXAMPLES
 
@@ -53,9 +47,15 @@ THREADED_FLAG_ENABLE=	with_threaded
 # Disable unsupported options
 FLAGS_DISABLE=		with_mpris with_dbus with_iwlib with_alsa
 
-post-extract:
-	${ECHO} "import Distribution.Simple" > ${WRKSRC}/Setup.hs
-	${ECHO} "main = defaultMain" >>  ${WRKSRC}/Setup.hs
+USE_CABAL=	X11-1.9 data-default-0.7.1.1 data-default-class-0.1.2.0 \
+		data-default-instances-containers-0.0.1 \
+		data-default-instances-dlist-0.0.1 \
+		data-default-instances-old-locale-0.0.1 dlist-0.8.0.5 \
+		extensible-exceptions-0.1.1.4 parsec-numbers-0.1.0 \
+		regex-base-0.93.2 regex-compat-0.95.1 regex-posix-0.95.2 \
+		utf8-string-1.0.1.1_3
 
-.include "${.CURDIR}/../../lang/ghc/bsd.cabal.mk"
+USE_XORG=	xrandr xrender xscrnsaver xinerama xext x11
+
+.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>
