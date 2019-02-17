@@ -3,7 +3,7 @@
 
 PORTNAME=	lhs2tex
 PORTVERSION=	1.22
-PORTREVISION=	2
+PORTREVISION=	3
 CATEGORIES=	textproc haskell
 
 MAINTAINER=	haskell@FreeBSD.org
@@ -14,6 +14,8 @@ LICENSE=	GPLv2
 USE_TEX=	latex dvipsk
 
 EXECUTABLES=	lhs2TeX
+
+USE_CABAL=	regex-base-0.93.2 regex-compat-0.95.1 regex-posix-0.95.2
 
 MAN1PAGES=	lhs2TeX.1
 
