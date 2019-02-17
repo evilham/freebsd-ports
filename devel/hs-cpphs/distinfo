@@ -1,3 +1,5 @@
-TIMESTAMP = 1499627828
-SHA256 (cpphs-1.20.8-builddata.tar.xz) = 93bc01e2f6213b25b1f6291a05de2eb3458d9aed109afaf4d35e33ce33bc7335
-SIZE (cpphs-1.20.8-builddata.tar.xz) = 1086884
+TIMESTAMP = 1550303525
+SHA256 (cabal/cpphs-1.20.8.tar.gz) = e56d64a7d8058e0fb63f0669397c1c861efb20a0376e0e74d86942ac151105ae
+SIZE (cabal/cpphs-1.20.8.tar.gz) = 45108
+SHA256 (cabal/polyparse-1.12.1/polyparse-1.12.1.tar.gz) = dd8d34e05853ea0ab9b9fee1cbaa51ae33095f7c0c09ff539dcd6d771e0adaa5
+SIZE (cabal/polyparse-1.12.1/polyparse-1.12.1.tar.gz) = 33060
