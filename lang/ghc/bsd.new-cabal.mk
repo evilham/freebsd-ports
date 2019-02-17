@@ -23,13 +23,15 @@ EXTRACT_ONLY=	${PORTNAME}-${PORTVERSION}${EXTRACT_SUFX}
 _PKG_GROUP=		${package:C/[\.-]//g}
 _PKG_WITHOUT_REV=	${package:C/_[0-9]+//}
 _REV=			${package:C/[^_]*//:S/_//}
-#MASTER_SITES+=	http://hackage.haskell.org/package/${package:C/_[0-9]+//}/:${package:C/[\.-]//g}
+
 MASTER_SITES+=	http://hackage.haskell.org/package/:${package:C/[\.-]//g}
 DISTFILES+=	${package:C/_[0-9]+//}/${package:C/_[0-9]+//}${EXTRACT_SUFX}:${package:C/[\.-]//g}
 EXTRACT_ONLY+=	${package:C/_[0-9]+//}/${package:C/_[0-9]+//}${EXTRACT_SUFX}
+
 .if ${package:C/[^_]*//:S/_//} != ""
 DISTFILES+=	${package:C/_[0-9]+//}/revision/${package:C/[^_]*//:S/_//}.cabal:${package:C/[\.-]//g}
 .endif
+
 .endfor
 
 .include <bsd.port.options.mk>
@@ -49,11 +51,12 @@ cabal-extract-deps:
 	cd ${WRKSRC} && \
 		${SETENV} HOME=${CABAL_HOME} cabal new-build --dependencies-only
 
-# Generates USE_CABAL= ... line ready to be pasted into the port
+# Generates USE_CABAL= ... line ready to be pasted into the port.
 make-use-cabal:
 	@echo ====================
 	@find ${CABAL_HOME} -name '*.conf'| xargs basename | sed -E 's|-[0-9a-z]{64}\.conf||' | sort | xargs echo -n USE_CABAL= && echo
 
+# Checks USE_CABAL items that have revisions.
 check-revs:
 .	for package in ${USE_CABAL}
 	@(fetch -o /dev/null http://hackage.haskell.org/package/${package:C/_[0-9]+//}/revision/1.cabal 2>/dev/null && echo "Package ${package} has revisions") || true
@@ -71,51 +74,12 @@ post-extract:
 	mkdir -p ${CABAL_HOME}/.cabal
 	touch ${CABAL_HOME}/.cabal/config
 
-# Leftovers from older approaches
-cabal-extract-deps2:
-.	for package in ${USE_CABAL}
-	cd ${WRKSRC} && \
-		${SETENV} HOME=${CABAL_HOME} cabal get ${package}
-.	endfor
-
-cabal-patch:
-	for patch in ${PATCHDIR}/pre-makesum-patch*; do \
-		${PATCH} -d ${WRKSRC} -i $${patch} ;\
-	done
-
-# After fetching dependencies, removes unnecessary stuff from cabal cache and
-# packs it along with WRKSRC into a tar.xz.
-cabal-makesum:
-	rm -rf ${CABAL_HOME}/.cabal/logs
-	rm -rf ${CABAL_HOME}/.cabal/store
-	rm -rf ${CABAL_HOME}/.cabal/packages/hackage.haskell.org/01-index.tar
-	rm -rf ${CABAL_HOME}/.cabal/packages/hackage.haskell.org/01-index.tar.gz
-	rm -rf ${CABAL_HOME}/.cabal/packages/hackage.haskell.org/01-index.tar.idx
-	rm -rf ${WRKSRC}/dist
-	find ${WRKSRC} -name '*.orig' -delete
-
-	tar -C ${WRKDIR} -ca -f /tmp/${PORTNAME}-${PORTVERSION}-builddata.tar.xz ${PORTNAME}-${PORTVERSION} cabal-home
-
-	cd /tmp \
-		&& sha256 ${PORTNAME}-${PORTVERSION}-builddata.tar.xz \
-		&& ${ECHO} -n "SIZE (${PORTNAME}-${PORTVERSION}-builddata.tar.xz) = " \
-		&& ${STAT} -f %z ${PORTNAME}-${PORTVERSION}-builddata.tar.xz
-
 do-build:
 	cd ${WRKSRC} && \
 		${SETENV} HOME=${CABAL_HOME} cabal new-build --offline --flags "${CABAL_FLAGS}" ${BUILD_ARGS} ${BUILD_TARGET}
 
 do-install:
 .	for exe in ${EXECUTABLES}
-# 	if [ -d ${WRKSRC}/dist-newstyle/build/${GHC_ARCH}-freebsd/ghc-${GHC_VERSION}/${PORTNAME}-${PORTVERSION}/x ]; then \
-# 		${INSTALL_PROGRAM} \
-# 			${WRKSRC}/dist-newstyle/build/${GHC_ARCH}-freebsd/ghc-${GHC_VERSION}/${PORTNAME}-${PORTVERSION}/x/${PORTNAME}/build/${exe}/${exe} \
-# 			${STAGEDIR}${PREFIX}/bin/ ;\
-# 	else \
-# 		${INSTALL_PROGRAM} \
-# 			${WRKSRC}/dist-newstyle/build/${GHC_ARCH}-freebsd/ghc-${GHC_VERSION}/${PORTNAME}-${PORTVERSION}/build/${exe}/${exe} \
-# 			${STAGEDIR}${PREFIX}/bin/ ;\
-# 	fi
 	${INSTALL_PROGRAM} \
 		`find ${WRKSRC}/dist-newstyle -name ${exe} -type f -perm +111` \
 		${STAGEDIR}${PREFIX}/bin/
