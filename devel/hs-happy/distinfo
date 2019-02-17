@@ -1,3 +1,3 @@
-TIMESTAMP = 1499627839
-SHA256 (happy-1.19.9-builddata.tar.xz) = 6f314bb9ba621b7ac9c23b2330ab9f846fe3123f3c2f36ebb4fb62d0b816666a
-SIZE (happy-1.19.9-builddata.tar.xz) = 1294236
+TIMESTAMP = 1550258807
+SHA256 (cabal/happy-1.19.9.tar.gz) = 3e81a3e813acca3aae52721c412cde18b7b7c71ecbacfaeaa5c2f4b35abf1d8d
+SIZE (cabal/happy-1.19.9.tar.gz) = 179328
