@@ -1,4 +1,5 @@
 EXECUTABLES?=	${PORTNAME}
+BUILD_TARGET?=	exe:${PORTNAME}
 
 GHC_VERSION?=	8.6.3
 GHC_ARCH=	${ARCH:S/amd64/x86_64/:C/armv.*/arm/}
@@ -53,6 +54,12 @@ make-use-cabal:
 	@echo ====================
 	@find ${CABAL_HOME} -name '*.conf'| xargs basename | sed -E 's|-[0-9a-z]{64}\.conf||' | sort | xargs echo -n USE_CABAL= && echo
 
+check-revs:
+.	for package in ${USE_CABAL}
+	@(fetch -o /dev/null http://hackage.haskell.org/package/${package:C/_[0-9]+//}/revision/1.cabal 2>/dev/null && echo "Package ${package} has revisions") || true
+	@([ -d ${DISTDIR}/${DIST_SUBDIR}/${package:C/_[0-9]+//}/revision ] && echo "    hint: " `find ${DISTDIR}/${DIST_SUBDIR}/${package:C/_[0-9]+//} -name *.cabal | xargs basename`) || true
+.	endfor
+
 post-extract:
 .	for package in ${USE_CABAL}
 .	if ${package:C/[^_]*//:S/_//} != ""
@@ -96,7 +103,7 @@ cabal-makesum:
 
 do-build:
 	cd ${WRKSRC} && \
-		${SETENV} HOME=${CABAL_HOME} cabal new-build --offline ${BUILD_ARGS} ${PORTNAME}
+		${SETENV} HOME=${CABAL_HOME} cabal new-build --offline --flags "${CABAL_FLAGS}" ${BUILD_ARGS} ${BUILD_TARGET}
 
 do-install:
 .	for exe in ${EXECUTABLES}
