@@ -3,7 +3,6 @@
 
 PORTNAME=	alex
 PORTVERSION=	3.2.4
-PORTREVISION=	1
 CATEGORIES=	devel haskell
 
 MAINTAINER=	haskell@FreeBSD.org
@@ -12,9 +11,6 @@ COMMENT=	Tool for generating lexical analysers in Haskell
 LICENSE=	BSD3CLAUSE
 
 OPTIONS_DEFINE=	EXAMPLES
-
-XMLDOCS=	doc/alex:html
-XMLDOCS_CONF=	yes
 
 INSTALL_PORTEXAMPLES=	cd ${WRKSRC}/examples/ && ${COPYTREE_SHARE} \* ${STAGEDIR}${EXAMPLESDIR}
 
