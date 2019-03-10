@@ -3,7 +3,7 @@
 
 PORTNAME=	c2hs
 PORTVERSION=	0.28.6
-PORTREVISION=	3
+PORTREVISION=	2
 CATEGORIES=	devel haskell
 
 MAINTAINER=	haskell@FreeBSD.org
@@ -15,10 +15,10 @@ USE_CABAL=	alex-3.2.4 dlist-0.8.0.5 happy-1.19.9_3 language-c-0.8.2_1 syb-0.7
 
 BUILD_DEPENDS=	happy:devel/hs-happy
 
-XMLDOCS=	doc/users_guide:html
+PLIST_FILES=	man/man1/c2hs.1.gz
 
-MAN1PAGES=	c2hs.1
-MAN1SRC=	doc/man1
+post-install:
+	${INSTALL_MAN} ${WRKSRC}/doc/man1/c2hs.1 ${STAGEDIR}${MANPREFIX}/man/man1/
 
 .include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>
