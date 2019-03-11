@@ -6,7 +6,7 @@ GHC_ARCH=	${ARCH:S/amd64/x86_64/:C/armv.*/arm/}
 
 CABAL_HOME=	${WRKDIR}/cabal-home
 
-BUILD_DEPENDS=	cabal:devel/hs-cabal-install
+BUILD_DEPENDS+=	cabal:devel/hs-cabal-install
 
 # Inherited via lang/ghc we need to depend on iconv and libgmp.so (stage q/a)
 USES+=		iconv:translit
@@ -18,6 +18,25 @@ DIST_SUBDIR?=	cabal
 MASTER_SITES?=	http://hackage.haskell.org/package/${PORTNAME}-${PORTVERSION}/:DEFAULT
 DISTFILES?=     ${PORTNAME}-${PORTVERSION}${EXTRACT_SUFX}
 EXTRACT_ONLY=	${PORTNAME}-${PORTVERSION}${EXTRACT_SUFX}
+
+.include <bsd.port.options.mk>
+
+.for opt in ${OPTIONS_DEFINE}
+
+.if defined(${opt}_CABAL_FLAGS)
+.	if ${PORT_OPTIONS:M${opt}}
+CABAL_FLAGS+=	${${opt}_CABAL_FLAGS}
+.	else
+CABAL_FLAGS+=	-${${opt}_CABAL_FLAGS}
+.	endif
+.endif
+
+.if defined(${opt}_USE_CABAL)
+.	if ${PORT_OPTIONS:M${opt}}
+USE_CABAL+=	${${opt}_USE_CABAL}
+.	endif
+.endif
+.endfor
 
 .for package in ${USE_CABAL}
 _PKG_GROUP=		${package:C/[\.-]//g}
@@ -33,8 +52,6 @@ DISTFILES+=	${package:C/_[0-9]+//}/revision/${package:C/[^_]*//:S/_//}.cabal:${p
 .endif
 
 .endfor
-
-.include <bsd.port.options.mk>
 
 # Fetches and unpacks package source from Hackage using only PORTNAME and PORTVERSION.
 cabal-extract:
