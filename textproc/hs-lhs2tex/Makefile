@@ -17,7 +17,5 @@ EXECUTABLES=	lhs2TeX
 
 USE_CABAL=	regex-base-0.93.2 regex-compat-0.95.1 regex-posix-0.95.2
 
-MAN1PAGES=	lhs2TeX.1
-
 .include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>

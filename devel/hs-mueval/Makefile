@@ -12,9 +12,6 @@ COMMENT=	Safely evaluate pure Haskell expressions
 LICENSE=	BSD3CLAUSE
 
 EXECUTABLES=	mueval mueval-core
-BUILD_TARGET=	exe:mueval exe:mueval-core
-
-#CONFIGURE_ARGS+=	--ghc-options="-dynamic"
 
 USE_CABAL=	QuickCheck-2.12.6.1_1 erf-2.0.0.0 exceptions-0.10.0_2 \
 		extensible-exceptions-0.1.1.4 ghc-paths-0.1.0.9_4 hint-0.9.0 \

@@ -3,7 +3,7 @@
 
 PORTNAME=	haddock
 PORTVERSION=	2.21.0
-PORTREVISION=	3
+PORTREVISION=	2
 CATEGORIES=	devel haskell
 
 MAINTAINER=	haskell@FreeBSD.org
@@ -11,13 +11,13 @@ COMMENT=	Documentation-generation tool for Haskell libraries
 
 LICENSE=	BSD3CLAUSE
 
-PLIST_SUB+=	GHC_HADDOCK_CMD=${GHC_HADDOCK_CMD} HADDOCK=${PREFIX}/bin/haddock EXECUTABLE=${PREFIX}/bin/haddock-${PORTVERSION}
+USE_CABAL=	ghc-paths-0.1.0.9_4 haddock-api-2.21.0 haddock-library-1.7.0
 
 GHC_HADDOCK_CMD=	${LOCALBASE}/bin/haddock-ghc-${GHC_VERSION}
 
-USE_CABAL=	ghc-paths-0.1.0.9_4 haddock-api-2.21.0 haddock-library-1.7.0
+PLIST_SUB+=	GHC_HADDOCK_CMD=${GHC_HADDOCK_CMD} HADDOCK=${PREFIX}/bin/haddock EXECUTABLE=${PREFIX}/bin/haddock-${PORTVERSION}
 
-# Doesn't work yet.
+# new-cabal doesn't seem to support this yet
 #CONFIGURE_ARGS+=	--program-suffix=-${PORTVERSION}
 
 post-stage:
