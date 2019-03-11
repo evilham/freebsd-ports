@@ -9,9 +9,8 @@ MAINTAINER=	haskell@FreeBSD.org
 COMMENT=	Manage files with git, without checking their contents into git
 
 LICENSE=	GPLv3
-# cabal new-build -v
-USES=		gmake perl5
-USE_PERL5=	build
+#USES=		gmake perl5
+#USE_PERL5=	build
 
 MAN1PAGES=	git-annex-add.1 git-annex-expire.1 git-annex-lookupkey.1 \
 		git-annex-remotedaemon.1 git-annex-ungroup.1 \
@@ -52,59 +51,58 @@ MAN1PAGES=	git-annex-add.1 git-annex-expire.1 git-annex-lookupkey.1 \
 		git-remote-tor-annex.1 git-annex-examinekey.1 git-annex-log.1 \
 		git-annex-rekey.1 git-annex-undo.1
 
-BUILD_DEPENDS+=	rsync:net/rsync \
+BUILD_DEPENDS=	rsync:net/rsync \
+		git:devel/git \
+		gsha256sum:sysutils/coreutils \
+		happy:devel/hs-happy
+
+RUN_DEPENDS=	rsync:net/rsync \
 		git:devel/git \
 		gsha256sum:sysutils/coreutils
 
-RUN_DEPENDS+=	rsync:net/rsync \
-		git:devel/git \
-		gsha256sum:sysutils/coreutils
+EXECUTABLES=	git-annex
+#EXECUTABLES=	git-annex git-annex-shell git-remote-tor-annex
 
-EXECUTABLES=	git-annex git-annex-shell git-remote-tor-annex
-
-FLAGS_DEFINE=	S3 ASSISTANT WEBDAV WEBAPP PAIRING PRODUCTION DBUS
-FLAGS_DEFAULT=	S3 ASSISTANT WEBDAV WEBAPP PAIRING PRODUCTION
+OPTIONS_DEFINE=		S3 ASSISTANT WEBDAV WEBAPP PAIRING DBUS
+OPTIONS_DEFAULT=	S3 ASSISTANT WEBDAV WEBAPP PAIRING
 
 S3_DESC=		S3 support
-S3_FLAG_ENABLE=		S3
-S3_FLAG_CABAL=		conduit conduit-extra aws
+S3_CABAL_FLAGS=		s3
+S3_USE_CABAL=		aws-0.21
 
 WEBDAV_DESC=		WebDAV support
-WEBDAV_FLAG_ENABLE=	WebDAV
-WEBDAV_FLAG_CABAL=	DAV
+WEBDAV_CABAL_FLAGS=	webdav
+WEBDAV_USE_CABAL=	DAV-1.3.3
 
 ASSISTANT_DESC=		'assistant' and 'watch' commands
-ASSISTANT_FLAG_ENABLE=	Assistant
-ASSISTANT_FLAG_CABAL=	dns mountpoints hinotify
+ASSISTANT_CABAL_FLAGS=	assistant
+ASSISTANT_USE_CABAL=	mountpoints-1.0.2
 
-WEBAPP_DESC=		Web application (requires assistant)
-WEBAPP_FLAG_DEPENDS=	ASSISTANT
-WEBAPP_FLAG_ENABLE=	Webapp
-WEBAPP_FLAG_CABAL=	yesod yesod-static yesod-form yesod-core path-pieces \
-			warp warp-tls wai wai-extra blaze-builder \
-			clientsession shakespeare
+WEBAPP_DESC=		Web application (requires ASSISTANT)
+WEBAPP_IMPLIES=		ASSISTANT
+WEBAPP_CABAL_FLAGS=	webapp
+WEBAPP_USE_CABAL=	yesod-1.6.0 yesod-form-1.6.4 \
+			yesod-static-1.6.0.1 \
+			warp-tls-3.2.4.3
 
-PAIRING_DESC=		Enable pairing (requires web application)
-PAIRING_FLAG_DEPENDS=	WEBAPP
-PAIRING_FLAG_ENABLE=	Pairing
-PAIRING_FLAG_CABAL=	network-multicast network-info
+PAIRING_DESC=		Enable pairing (requires WEBAPP)
+PAIRING_IMPLIES=	WEBAPP
+PAIRING_CABAL_FLAGS=	pairing
+PAIRING_USE_CABAL=	network-multicast-0.2.0
 
-PRODUCTION_DESC=	Production build
-PRODUCTION_FLAG_ENABLE=	Production
+DBUS_DESC=		D-Bus support
+DBUS_CABAL_FLAGS=	dbus
+DBUS_USE_CABAL=		dbus-1.2.3 fdo-notify-0.3.1 th-lift-0.7.11
 
-DBUS_DESC=		Dbus support
-DBUS_FLAG_ENABLE=	Dbus
-DBUS_FLAG_CABAL=	dbus fdo-notify
+CABAL_FLAGS=		torrentparser magicmime \
+			-benchmark -debuglocks
 
-FLAGS_ENABLE=		ConcurrentOutput TorrentParser MagicMime
-FLAGS_DISABLE=		Benchmark TestSuite Android AndroidSplice
-
-USE_CABAL=	DAV-1.3.3 IfElse-0.85 QuickCheck-2.12.6.1_1 SafeSemaphore-0.10.1_1 \
+USE_CABAL=	IfElse-0.85 QuickCheck-2.12.6.1_1 SafeSemaphore-0.10.1_1 \
 		StateVar-1.1.1.1 adjunctions-4.4_2 aeson-1.4.2.0_1 \
 		aeson-compat-0.3.9 alex-3.2.4 ansi-terminal-0.9 ansi-wl-pprint-0.6.8.2_1 \
 		appar-0.1.7 asn1-encoding-0.9.5 asn1-parse-0.9.4 \
 		asn1-types-0.3.2 attoparsec-0.13.2.2 attoparsec-iso8601-1.0.1.0 \
-		auto-update-0.1.4 aws-0.21 base-compat-0.10.5 base-orphans-0.8 \
+		auto-update-0.1.4 base-compat-0.10.5 base-orphans-0.8 \
 		basement-0.0.10_1 bencode-0.6.0.0 bifunctors-5.5.3 \
 		blaze-builder-0.4.1.0 blaze-html-0.9.1.1 blaze-markup-0.8.2.2 \
 		bloomfilter-2.0.1.0 bsb-http-chunked-0.0.0.4 byteable-0.1.1 \
@@ -132,9 +130,9 @@ USE_CABAL=	DAV-1.3.3 IfElse-0.85 QuickCheck-2.12.6.1_1 SafeSemaphore-0.10.1_1 \
 		libyaml-0.1.1.0 lifted-base-0.2.3.12 magic-1.1 memory-0.14.18_1 \
 		microlens-0.4.10 microlens-th-0.4.2.3 mime-types-0.1.0.9 \
 		monad-control-1.0.2.3 monad-logger-0.3.30 monad-loops-0.4.3 \
-		mono-traversable-1.0.11.0 mountpoints-1.0.2 \
+		mono-traversable-1.0.11.0 \
 		network-byte-order-0.0.0.0 network-info-0.2.0.10 \
-		network-multicast-0.2.0 optparse-applicative-0.14.3.0 \
+		optparse-applicative-0.14.3.0 \
 		parallel-3.2.2.0 path-pieces-0.2.1_1 pem-0.2.4 persistent-2.9.1_1 \
 		persistent-sqlite-2.9.2 persistent-template-2.6.0 \
 		primitive-0.6.4.0_1 profunctors-5.3 psqueues-0.2.7.1 \
@@ -155,13 +153,22 @@ USE_CABAL=	DAV-1.3.3 IfElse-0.85 QuickCheck-2.12.6.1_1 SafeSemaphore-0.10.1_1 \
 		unliftio-core-0.1.2.0_1 unordered-containers-0.2.10.0 \
 		utf8-string-1.0.1.1_3 uuid-1.3.13_2 uuid-types-1.0.3_1 vault-0.3.1.2 \
 		vector-0.12.0.2 vector-algorithms-0.8.0.1 void-0.7.2 wai-3.2.2 \
-		wai-app-static-3.1.6.2 wai-extra-3.0.25 wai-logger-2.3.4 \
-		warp-3.2.26 warp-tls-3.2.4.3 wcwidth-0.0.2 word8-0.1.3 \
+		wai-app-static-3.1.6.2 wai-logger-2.3.4 wai-extra-3.0.25 warp-3.2.26 \
+		wcwidth-0.0.2 word8-0.1.3 \
 		x509-1.7.5 x509-store-1.6.7 x509-system-1.6.6 \
 		x509-validation-1.6.11 xml-conduit-1.8.0.1 xml-hamlet-0.5.0 \
-		xml-types-0.3.6 xss-sanitize-0.3.6 yaml-0.11.0.0 yesod-1.6.0 \
-		yesod-core-1.6.12 yesod-form-1.6.4 yesod-persistent-1.6.0.1 \
-		yesod-static-1.6.0.1
+		xml-types-0.3.6 xss-sanitize-0.3.6 yaml-0.11.0.0 yesod-core-1.6.12 \
+		yesod-persistent-1.6.0.1
+
+PLIST_FILES=	bin/git-annex-shell bin/git-remote-tor-annex
+
+post-stage:
+	${LN} -sf ${PREFIX}/bin/git-annex ${STAGEDIR}${PREFIX}/bin/git-annex-shell
+	${LN} -sf ${PREFIX}/bin/git-annex ${STAGEDIR}${PREFIX}/bin/git-remote-tor-annex
+
+# .for man in ${MAN1PAGES}
+# 	${INSTALL_MAN} ${WRKSRC}/${man} ${STAGEDIR}${MANPREFIX}/man/man1/
+# .endfor
 
 .include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>
