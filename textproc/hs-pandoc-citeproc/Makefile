@@ -9,21 +9,23 @@ COMMENT=	Supports using pandoc with citeproc
 
 LICENSE=	BSD3CLAUSE
 
-FLAGS_DEFINE=	BIBUTILS EMBED_DATA UNICODE_COLLATION
-FLAGS_DEFAULT=	BIBUTILS
+OPTIONS_DEFINE=		BIBUTILS EMBED_DATA UNICODE_COLLATION
+OPTIONS_DEFAULT=	BIBUTILS
 
 BIBUTILS_DESC=		Use Chris Putnam's Bibutils #'
-BIBUTILS_FLAG_ENABLE=	bibutils
-BIBUTILS_FLAG_CABAL=	hs-bibutils>=0.3
+BIBUTILS_CABAL_FLAGS=	bibutils
+BIBUTILS_USE_CABAL=	hs-bibutils-6.7.0.0
 
 EMBED_DATA_DESC=	Embed locale files into the library
-EMBED_DATA_FLAG_ENABLE=	embed_data_files
+EMBED_DATA_CABAL_FLAGS=	embed_data_files
+EMBED_DATA_USE_CABAL=	file-embed-0.0.11
 
 UNICODE_COLLATION_DESC=		Use bindings to the Internationl Components for Unicode libraries
-UNICODE_COLLATION_FLAG_ENABLE=	unicode_collation
-UNICODE_COLLATION_FLAG_CABAL=	text-icu
+UNICODE_COLLATION_CABAL_FLAGS=	unicode_collation
+UNICODE_COLLATION_USE_CABAL=	text-icu-0.7.0.1
+UNICODE_COLLATION_LIB_DEPENDS=	libicui18n.so:devel/icu
 
-FLAGS_DISABLE=	test_citeproc debug
+CABAL_FLAGS=	-test_citeproc -debug
 
 USE_CABAL=	Glob-0.10.0 HsYAML-0.1.1.3 JuicyPixels-3.3.3_1 \
 		QuickCheck-2.12.6.1_1 SHA-1.6.4.4 aeson-1.4.2.0_1 \
@@ -40,7 +42,7 @@ USE_CABAL=	Glob-0.10.0 HsYAML-0.1.1.3 JuicyPixels-3.3.3_1 \
 		data-default-instances-old-locale-0.0.1 dlist-0.8.0.5 \
 		doctemplates-0.2.2.1 erf-2.0.0.0 exceptions-0.10.0_2 \
 		fail-4.9.0.0 haddock-library-1.7.0 hourglass-0.2.12 \
-		hs-bibutils-6.7.0.0 hslua-1.0.2 hslua-module-text-0.2.0 \
+		hslua-1.0.2 hslua-module-text-0.2.0 \
 		http-client-0.6.1 http-client-tls-0.3.5.3 http-types-0.12.2 \
 		hxt-9.3.1.16 hxt-charproperties-9.2.0.1 \
 		hxt-regex-xmlschema-9.2.0.3 hxt-unicode-9.0.2.4 \
