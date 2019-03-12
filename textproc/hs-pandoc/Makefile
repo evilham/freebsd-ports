@@ -28,9 +28,6 @@ TRYPANDOC_EXECUTABLES=	trypandoc
 
 CABAL_FLAGS=	-static derive_json_via_th
 
-MAN1SRC=	man
-MAN1PAGES=	pandoc.1
-
 USE_CABAL=	Glob-0.10.0 HsYAML-0.1.1.3 JuicyPixels-3.3.3_1 \
 		QuickCheck-2.12.6.1_1 SHA-1.6.4.4 aeson-1.4.2.0_1 \
 		aeson-pretty-0.8.7 ansi-terminal-0.9 asn1-encoding-0.9.5 \
@@ -61,6 +58,9 @@ USE_CABAL=	Glob-0.10.0 HsYAML-0.1.1.3 JuicyPixels-3.3.3_1 \
 		utf8-string-1.0.1.1_3 uuid-types-1.0.3_1 vector-0.12.0.2 \
 		x509-1.7.5 x509-store-1.6.7 x509-system-1.6.6 \
 		x509-validation-1.6.11 xml-1.3.14
+
+post-install:
+	${INSTALL_MAN} ${WRKSRC}/man/pandoc.1 ${STAGEDIR}${MAN1PREFIX}/man/man1
 
 .include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>
