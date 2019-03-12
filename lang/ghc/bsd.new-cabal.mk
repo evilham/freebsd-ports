@@ -1,5 +1,4 @@
 EXECUTABLES?=	${PORTNAME}
-BUILD_TARGET?=	${EXECUTABLES:S/^/exe:&/}
 
 GHC_VERSION?=	8.6.3
 GHC_ARCH=	${ARCH:S/amd64/x86_64/:C/armv.*/arm/}
@@ -23,6 +22,7 @@ EXTRACT_ONLY=	${PORTNAME}-${PORTVERSION}${EXTRACT_SUFX}
 
 .for opt in ${OPTIONS_DEFINE}
 
+# dispatch OPT_CABAL_FLAGS variables
 .if defined(${opt}_CABAL_FLAGS)
 .	if ${PORT_OPTIONS:M${opt}}
 CABAL_FLAGS+=	${${opt}_CABAL_FLAGS}
@@ -31,12 +31,21 @@ CABAL_FLAGS+=	-${${opt}_CABAL_FLAGS}
 .	endif
 .endif
 
+# dispatch OPT_USE_CABAL variables
 .if defined(${opt}_USE_CABAL)
 .	if ${PORT_OPTIONS:M${opt}}
 USE_CABAL+=	${${opt}_USE_CABAL}
 .	endif
 .endif
+
+.if defined(${opt}_EXECUTABLES)
+.	if ${PORT_OPTIONS:M${opt}}
+EXECUTABLES+=	${${opt}_EXECUTABLES}
+.	endif
+.endif
 .endfor
+
+BUILD_TARGET?=	${EXECUTABLES:S/^/exe:&/}
 
 .for package in ${USE_CABAL}
 _PKG_GROUP=		${package:C/[\.-]//g}
