@@ -10,22 +10,24 @@ COMMENT=	Conversion between markup formats
 
 LICENSE=	GPLv2
 
-FLAGS_DEFINE=		EMBED_DATA TRYPANDOC
-OPTIONS_DEFINE=		PDFGEN
-OPTIONS_DEFAULT=	PDFGEN
+OPTIONS_DEFINE=		EMBED_DATA TRYPANDOC
 
 EMBED_DATA_DESC=	Embed data files in binary for relocatable executable
-EMBED_DATA_FLAG_ENABLE=	embed_data_files
-EMBED_DATA_FLAG_CABAL=	file-embed>=0.0
-PDFGEN_DESC=		Include TeX for PDF generation
-PDFGEN_USE=		TEX=texmf:run
-TRYPANDOC_DESC=		Build trypandoc cgi executable
-TRYPANDOC_FLAG_ENABLE=	trypandoc
-TRYPANDOC_FLAG_CABAL=	aeson wai-extra wai>=0.3
-TRYPANDOC_FLAG_EXECUTABLE=	trypandoc
+EMBED_DATA_CABAL_FLAGS=	embed_data_files
+EMBED_DATA_USE_CABAL=	file-embed-0.0.11
 
-FLAGS_ENABLE=	network-uri
-FLAGS_DISABLE=	make-pandoc-man-pages
+TRYPANDOC_DESC=		Build trypandoc cgi executable
+TRYPANDOC_CABAL_FLAGS=	trypandoc
+TRYPANDOC_USE_CABAL=	appar-0.1.7 auto-update-0.1.4 byteorder-1.0.4 \
+			cabal-doctest-1.0.6_2 easy-file-0.2.2 fast-logger-2.4.13 \
+			hsc2hs-0.68.4_1 iproute-1.7.7 resourcet-1.2.2 \
+			semigroups-0.18.5 unix-compat-0.5.1 unix-time-0.4.5 \
+			unliftio-core-0.1.2.0_1 vault-0.3.1.2 void-0.7.2 wai-3.2.2 \
+			wai-extra-3.0.25 wai-logger-2.3.4 word8-0.1.3
+TRYPANDOC_EXECUTABLES=	trypandoc
+
+CABAL_FLAGS=	-static derive_json_via_th
+
 MAN1SRC=	man
 MAN1PAGES=	pandoc.1
 
