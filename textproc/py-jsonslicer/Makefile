@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	jsonslicer
-PORTVERSION=	0.1.3
+PORTVERSION=	0.1.4
 CATEGORIES=	textproc python
 MASTER_SITES=	CHEESESHOP
 PKGNAMEPREFIX=	${PYTHON_PKGNAMEPREFIX}
@@ -15,7 +15,7 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 
 LIB_DEPENDS=	libyajl.so:devel/yajl
 
-USES=		python:3.5+ pkgconfig
+USES=		compiler:c++11-lang pkgconfig python:3.5+
 USE_PYTHON=	autoplist distutils
 
 # pydistutils problem, it uses CC for compiling C++ code
