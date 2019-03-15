@@ -11,7 +11,6 @@ COMMENT=	Utilities for converting YAML and JSON documents back and forth
 LICENSE=	BSD3CLAUSE
 
 EXECUTABLES=	json2yaml yaml2json
-BUILD_TARGET=	exe:json2yaml exe:yaml2json
 CABAL_FLAGS=	-no-exe
 
 USE_CABAL=	aeson-1.4.2.0_1 attoparsec-0.13.2.2 base-compat-0.10.5 \

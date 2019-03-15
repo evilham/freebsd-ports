@@ -2,7 +2,6 @@
 
 PORTNAME=	DAV
 PORTVERSION=	1.3.3
-PORTREVISION=	1
 CATEGORIES=	www haskell
 
 MAINTAINER=	haskell@FreeBSD.org
@@ -11,9 +10,8 @@ COMMENT=	Command line client for RFC 4918 WebDAV protocol
 LICENSE=	GPLv3
 
 EXECUTABLES=	hdav
-BUILD_TARGET=	exe:hdav
 
-FLAGS_ENABLE=	network-uri
+CABAL_FLAGS=	network-uri
 
 USE_CABAL=	StateVar-1.1.1.1 adjunctions-4.4_2 aeson-1.4.2.0_1 ansi-terminal-0.9 \
 		ansi-wl-pprint-0.6.8.2_1 asn1-encoding-0.9.5 asn1-parse-0.9.4 \

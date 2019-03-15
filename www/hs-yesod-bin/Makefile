@@ -12,7 +12,6 @@ LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 EXECUTABLES=	yesod
-BUILD_TARGET=	exe:yesod
 
 USE_CABAL=	aeson-1.4.2.0_1 ansi-terminal-0.9 ansi-wl-pprint-0.6.8.2_1 \
 		appar-0.1.7 asn1-encoding-0.9.5 asn1-parse-0.9.4 \
