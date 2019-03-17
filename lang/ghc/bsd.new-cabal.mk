@@ -47,7 +47,9 @@ EXECUTABLES+=	${${opt}_EXECUTABLES}
 
 BUILD_TARGET?=	${EXECUTABLES:S/^/exe:&/}
 
-.for package in ${USE_CABAL}
+_use_cabal=	${USE_CABAL:O:u}
+
+.for package in ${_use_cabal}
 _PKG_GROUP=		${package:C/[\.-]//g}
 _PKG_WITHOUT_REV=	${package:C/_[0-9]+//}
 _REV=			${package:C/[^_]*//:S/_//}
@@ -84,13 +86,13 @@ make-use-cabal:
 
 # Checks USE_CABAL items that have revisions.
 check-revs:
-.	for package in ${USE_CABAL}
+.	for package in ${_use_cabal}
 	@(fetch -o /dev/null http://hackage.haskell.org/package/${package:C/_[0-9]+//}/revision/1.cabal 2>/dev/null && echo "Package ${package} has revisions") || true
 	@([ -d ${DISTDIR}/${DIST_SUBDIR}/${package:C/_[0-9]+//}/revision ] && echo "    hint: " `find ${DISTDIR}/${DIST_SUBDIR}/${package:C/_[0-9]+//} -name *.cabal | xargs basename`) || true
 .	endfor
 
 post-extract:
-.	for package in ${USE_CABAL}
+.	for package in ${_use_cabal}
 .	if ${package:C/[^_]*//:S/_//} != ""
 		cp ${DISTDIR}/${DIST_SUBDIR}/${package:C/_[0-9]+//}/revision/${package:C/[^_]*//:S/_//}.cabal `find ${WRKDIR}/${package:C/_[0-9]+//} -name *.cabal -depth 1`
 .	endif
