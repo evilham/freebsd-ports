@@ -5,7 +5,9 @@ GHC_ARCH=	${ARCH:S/amd64/x86_64/:C/armv.*/arm/}
 
 CABAL_HOME=	${WRKDIR}/cabal-home
 
+.if !defined(CABAL_BOOTSTRAP)
 BUILD_DEPENDS+=	cabal:devel/hs-cabal-install
+.endif
 
 # Inherited via lang/ghc we need to depend on iconv and libgmp.so (stage q/a)
 USES+=		iconv:translit
@@ -56,7 +58,9 @@ _REV=			${package:C/[^_]*//:S/_//}
 
 MASTER_SITES+=	http://hackage.haskell.org/package/:${package:C/[\.-]//g}
 DISTFILES+=	${package:C/_[0-9]+//}/${package:C/_[0-9]+//}${EXTRACT_SUFX}:${package:C/[\.-]//g}
+.if !defined(CABAL_BOOTSTRAP)
 EXTRACT_ONLY+=	${package:C/_[0-9]+//}/${package:C/_[0-9]+//}${EXTRACT_SUFX}
+.endif
 
 .if ${package:C/[^_]*//:S/_//} != ""
 DISTFILES+=	${package:C/_[0-9]+//}/revision/${package:C/[^_]*//:S/_//}.cabal:${package:C/[\.-]//g}
@@ -90,6 +94,8 @@ check-revs:
 	@(fetch -o /dev/null http://hackage.haskell.org/package/${package:C/_[0-9]+//}/revision/1.cabal 2>/dev/null && echo "Package ${package} has revisions") || true
 	@([ -d ${DISTDIR}/${DIST_SUBDIR}/${package:C/_[0-9]+//}/revision ] && echo "    hint: " `find ${DISTDIR}/${DIST_SUBDIR}/${package:C/_[0-9]+//} -name *.cabal | xargs basename`) || true
 .	endfor
+
+.if !defined(CABAL_BOOTSTRAP)
 
 post-extract:
 .	for package in ${_use_cabal}
@@ -129,3 +135,5 @@ post-install-script:
 		${ECHO_CMD} 'bin/${exe}' >> ${TMPPLIST}
 .	endfor
 .endif
+
+.endif # !defined(CABAL_BOOTSTRAP)
