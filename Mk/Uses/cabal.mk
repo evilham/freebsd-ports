@@ -1,16 +1,27 @@
-EXECUTABLES?=	${PORTNAME}
+# $FreeBSD$
+#
+#
+#
+# Feature:      cabal
+# Usage:        USES=cabal
+#
+# MAINTAINER: haskell@FreeBSD.org
 
-GHC_VERSION?=	8.6.3
-GHC_ARCH=	${ARCH:S/amd64/x86_64/:C/armv.*/arm/}
+.if !defined(_INCLUDE_USES_CABAL_MK)
+_INCLUDE_USES_CABAL_MK=    yes
+
+EXECUTABLES?=	${PORTNAME}
 
 CABAL_HOME=	${WRKDIR}/cabal-home
 
 .if !defined(CABAL_BOOTSTRAP)
-BUILD_DEPENDS+=	cabal:devel/hs-cabal-install
+BUILD_DEPENDS+=	cabal:devel/hs-cabal-install \
+		ghc:lang/ghc
 .endif
 
 # Inherited via lang/ghc we need to depend on iconv and libgmp.so (stage q/a)
-USES+=		iconv:translit
+iconv_ARGS=	translit
+.include "${USESDIR}/iconv.mk"
 LIB_DEPENDS+=	libgmp.so:math/gmp \
 		libffi.so.6:devel/libffi
 
@@ -137,3 +148,5 @@ post-install-script:
 .endif
 
 .endif # !defined(CABAL_BOOTSTRAP)
+
+.endif
