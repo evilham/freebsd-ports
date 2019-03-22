@@ -1,4 +1,4 @@
---- Setup.hs.orig       2018-07-17 19:45:58 UTC
+--- Setup.hs.orig	2019-01-26 14:14:51 UTC
 +++ Setup.hs
 @@ -17,7 +17,7 @@ import Distribution.Package
  import Distribution.Version( Version )
@@ -16,5 +16,5 @@
 -              (mandir (absoluteInstallDirs pkg lbi copy) </> "man1")
 +              (prefix (absoluteInstallDirs pkg lbi copy) </> "man" </> "man1")
                [(buildDir lbi </> "darcs", "darcs.1")]
-
+ 
  -- ---------------------------------------------------------------------
