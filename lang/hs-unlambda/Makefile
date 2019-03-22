@@ -11,5 +11,6 @@ COMMENT=	Unlambda interpreter
 
 LICENSE=	GPLv2
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
+USES=		cabal
+
 .include <bsd.port.mk>

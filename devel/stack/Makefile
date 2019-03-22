@@ -21,7 +21,7 @@ LICENSE=	BSD3CLAUSE
 BUILD_DEPENDS=	happy:devel/hs-happy
 RUN_DEPENDS=	ca_root_nss>0:security/ca_root_nss
 
-#USES=		gmake iconv:translit perl5
+USES=		cabal
 
 USE_CABAL=	Glob-0.10.0 HUnit-1.6.0.0 QuickCheck-2.12.6.1_1 StateVar-1.1.1.1 \
 		aeson-1.4.2.0_1 aeson-compat-0.3.9 annotated-wl-pprint-0.7.0 \
@@ -78,5 +78,4 @@ USE_CABAL=	Glob-0.10.0 HUnit-1.6.0.0 QuickCheck-2.12.6.1_1 StateVar-1.1.1.1 \
 #PLIST_FILES=	etc/bash_completion.d/_stack.bash \
 #		share/zsh/site-functions/_stack
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>

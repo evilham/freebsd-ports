@@ -10,7 +10,8 @@ COMMENT=	Library and tool for parsing .eventlog files from GHC
 
 LICENSE=	BSD3CLAUSE
 
+USES=		cabal
+
 USE_CABAL=	primitive-0.6.4.0_1 vector-0.12.0.2
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>

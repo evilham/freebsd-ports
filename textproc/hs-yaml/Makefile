@@ -10,8 +10,7 @@ COMMENT=	Utilities for converting YAML and JSON documents back and forth
 
 LICENSE=	BSD3CLAUSE
 
-EXECUTABLES=	json2yaml yaml2json
-CABAL_FLAGS=	-no-exe
+USES=		cabal
 
 USE_CABAL=	aeson-1.4.2.0_1 attoparsec-0.13.2.2 base-compat-0.10.5 \
 		conduit-1.3.1 dlist-0.8.0.5 exceptions-0.10.0_2 \
@@ -23,5 +22,7 @@ USE_CABAL=	aeson-1.4.2.0_1 attoparsec-0.13.2.2 base-compat-0.10.5 \
 		unordered-containers-0.2.10.0 uuid-types-1.0.3_1 vector-0.12.0.2 \
 		vector-algorithms-0.8.0.1
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
+EXECUTABLES=	json2yaml yaml2json
+CABAL_FLAGS=	-no-exe
+
 .include <bsd.port.mk>

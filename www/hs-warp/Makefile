@@ -16,7 +16,8 @@ USE_CABAL=	auto-update>=0.1.1 bsb-http-chunked case-insensitive>=0.2 \
 		streaming-commons>=0.1.10 unix-compat>=0.2 vault>=0.3 \
 		wai>=3.0 word8
 
-CABAL_FLAGS=	allow-sendfilefd -warp-debug -network-bytestring
+FLAGS_ENABLE=	allow-sendfilefd
+FLAGS_DISABLE=	network-bytestring warp-debug use-bytestring-builder
 
 .include "${.CURDIR}/../../lang/ghc/bsd.cabal.mk"
 .include <bsd.port.mk>

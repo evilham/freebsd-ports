@@ -10,6 +10,8 @@ COMMENT=	Source code suggestions
 
 LICENSE=	BSD3CLAUSE
 
+USES=		cabal
+
 USE_CABAL=	aeson-1.4.2.0_1 ansi-terminal-0.9 attoparsec-0.13.2.2 \
 		base-compat-0.10.5 clock-0.7.2 cmdargs-0.10.20 colour-2.3.4 \
 		conduit-1.3.1 cpphs-1.20.8 data-default-0.7.1.1 \
@@ -28,5 +30,4 @@ USE_CABAL=	aeson-1.4.2.0_1 ansi-terminal-0.9 attoparsec-0.13.2.2 \
 		unordered-containers-0.2.10.0 uuid-types-1.0.3_1 vector-0.12.0.2 \
 		vector-algorithms-0.8.0.1 yaml-0.11.0.0
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>

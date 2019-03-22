@@ -11,7 +11,8 @@ COMMENT=	Happy is a parser generator for Haskell
 
 LICENSE=	BSD3CLAUSE
 
+USES=		cabal
+
 INSTALL_PORTEXAMPLES=	@(cd ${WRKSRC}/examples/ && ${COPYTREE_SHARE} \* ${STAGEDIR}${EXAMPLESDIR})
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>

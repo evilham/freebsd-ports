@@ -11,6 +11,8 @@ COMMENT=	Minimalistic text-based status bar
 
 LICENSE=	BSD3CLAUSE
 
+USES=		cabal
+
 OPTIONS_DEFINE=		EXAMPLES XFT XPM UTF8 MPD INOTIFY DATEZONE THREADED UVMETER
 OPTIONS_DEFAULT=	XFT UTF8
 
@@ -46,8 +48,7 @@ THREADED_CABAL_FLAGS=	with_threaded
 UVMETER_DESC=		UV meter plugin
 UVMETER_CABAL_FLAGS=	with_uvmeter
 
-CABAL_FLAGS=		with_weather with_rtsopts \
-			-with_mpris -with_dbus -with_iwlib -with_alsa -all_extensions
+USE_XORG=	xrandr xrender xscrnsaver xinerama xext x11
 
 USE_CABAL=	X11-1.9 X11-xft-0.3.1 data-default-0.7.1.1 \
 		data-default-class-0.1.2.0 data-default-instances-containers-0.0.1 \
@@ -72,10 +73,10 @@ USE_CABAL=	X11-1.9 X11-xft-0.3.1 data-default-0.7.1.1 \
 		integer-logarithms-1.0.2.2_1 cereal-0.5.8.0 asn1-types-0.3.2 \
 		hourglass-0.2.12 asn1-encoding-0.9.5 pem-0.2.4 asn1-parse-0.9.4
 
-USE_XORG=	xrandr xrender xscrnsaver xinerama xext x11
+CABAL_FLAGS=		with_weather with_rtsopts \
+			-with_mpris -with_dbus -with_iwlib -with_alsa -all_extensions
 
 INSTALL_PORTEXAMPLES=	${INSTALL_DATA} ${WRKSRC}/examples/xmobar.config \
 				${STAGEDIR}${EXAMPLESDIR}
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>

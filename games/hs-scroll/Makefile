@@ -11,6 +11,8 @@ COMMENT=	A roguelike game
 
 LICENSE=	GPLv2
 
+USES=		cabal
+
 USE_CABAL=	IfElse-0.85 alex-3.2.4 ansi-terminal-0.9 ansi-wl-pprint-0.6.8.2_1 \
 		c2hs-0.28.6 case-insensitive-1.2.0.11 colour-2.3.4 data-default-0.7.1.1 \
 		data-default-class-0.1.2.0 \
@@ -21,5 +23,4 @@ USE_CABAL=	IfElse-0.85 alex-3.2.4 ansi-terminal-0.9 ansi-wl-pprint-0.6.8.2_1 \
 		optparse-applicative-0.14.3.0 primitive-0.6.4.0_1 syb-0.7 \
 		transformers-compat-0.6.2 vector-0.12.0.2
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>

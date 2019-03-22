@@ -12,6 +12,8 @@ LICENSE=	BSD3CLAUSE
 
 BUILD_DEPENDS=	ghc:lang/ghc
 
+USES=		cabal
+
 USE_CABAL=	async-2.2.1_1 base16-bytestring-0.1.1.6 base64-bytestring-1.0.0.1 \
 		cryptohash-sha256-0.11.101.0_2 digest-0.0.1.2 echo-0.1.3_1 \
 		ed25519-0.0.5.0_2 edit-distance-0.2.2.1_1 hackage-security-0.5.3.0_4 \
@@ -42,5 +44,4 @@ do-build:
 do-install:
 	${INSTALL_PROGRAM} ${WRKDIR}/prefix/bin/cabal ${STAGEDIR}${PREFIX}/bin/
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>

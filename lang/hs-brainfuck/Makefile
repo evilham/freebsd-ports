@@ -11,7 +11,8 @@ COMMENT=	Brainfuck interpreter
 
 LICENSE=	GPLv2
 
+USES=		cabal
+
 EXECUTABLES=	bf
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>

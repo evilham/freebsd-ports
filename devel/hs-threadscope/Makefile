@@ -13,7 +13,7 @@ LICENSE=	BSD3CLAUSE
 LIB_DEPENDS=	libfontconfig.so:x11-fonts/fontconfig \
 		libfreetype.so:print/freetype2
 
-USES=		gnome
+USES=		cabal gnome
 
 USE_GNOME=	cairo gdkpixbuf2 glib20 gtk20
 
@@ -23,5 +23,4 @@ USE_CABAL=	alex-3.2.4 cairo-0.13.6.0 exceptions-0.10.0_2 file-embed-0.0.11 \
 		hashtables-1.2.3.1 pango-0.13.6.0 primitive-0.6.4.0_1 temporary-1.3 \
 		transformers-compat-0.6.2 utf8-string-1.0.1.1_3 vector-0.12.0.2
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>

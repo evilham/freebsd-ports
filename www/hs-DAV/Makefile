@@ -9,9 +9,7 @@ COMMENT=	Command line client for RFC 4918 WebDAV protocol
 
 LICENSE=	GPLv3
 
-EXECUTABLES=	hdav
-
-CABAL_FLAGS=	network-uri
+USES=		cabal
 
 USE_CABAL=	StateVar-1.1.1.1 adjunctions-4.4_2 aeson-1.4.2.0_1 ansi-terminal-0.9 \
 		ansi-wl-pprint-0.6.8.2_1 asn1-encoding-0.9.5 asn1-parse-0.9.4 \
@@ -44,5 +42,8 @@ USE_CABAL=	StateVar-1.1.1.1 adjunctions-4.4_2 aeson-1.4.2.0_1 ansi-terminal-0.9 
 		x509-system-1.6.6 x509-validation-1.6.11 xml-conduit-1.8.0.1 \
 		xml-hamlet-0.5.0 xml-types-0.3.6
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
+EXECUTABLES=	hdav
+
+CABAL_FLAGS=	network-uri
+
 .include <bsd.port.mk>

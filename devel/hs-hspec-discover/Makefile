@@ -10,5 +10,6 @@ COMMENT=	Automatically discover and run Hspec tests
 
 LICENSE=	MIT
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
+USES=		cabal
+
 .include <bsd.port.mk>

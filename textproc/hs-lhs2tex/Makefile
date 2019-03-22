@@ -11,11 +11,12 @@ COMMENT=	Preprocessor for typesetting Haskell sources with LaTeX
 
 LICENSE=	GPLv2
 
-USE_TEX=	latex dvipsk
+USES=		cabal
 
-EXECUTABLES=	lhs2TeX
+USE_TEX=	latex dvipsk
 
 USE_CABAL=	regex-base-0.93.2 regex-compat-0.95.1 regex-posix-0.95.2
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
+EXECUTABLES=	lhs2TeX
+
 .include <bsd.port.mk>

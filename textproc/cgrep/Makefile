@@ -13,6 +13,8 @@ LICENSE=	GPLv2
 
 LIB_DEPENDS=	libpcre.so:devel/pcre
 
+USES=		cabal
+
 USE_CABAL=	StateVar-1.1.1.1 aeson-1.4.2.0 ansi-terminal-0.9 \
 		attoparsec-0.13.2.2 base-compat-0.10.5 base-orphans-0.8 \
 		bifunctors-5.5.3 cabal-doctest-1.0.6_2 cmdargs-0.10.20 \
@@ -30,5 +32,4 @@ USE_CABAL=	StateVar-1.1.1.1 aeson-1.4.2.0 ansi-terminal-0.9 \
 		uuid-types-1.0.3 vector-0.12.0.2 vector-algorithms-0.8.0.1 \
 		yaml-0.11.0.0
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>

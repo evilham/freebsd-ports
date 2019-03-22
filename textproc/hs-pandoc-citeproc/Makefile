@@ -9,6 +9,8 @@ COMMENT=	Supports using pandoc with citeproc
 
 LICENSE=	BSD3CLAUSE
 
+USES=		cabal
+
 OPTIONS_DEFINE=		BIBUTILS EMBED_DATA UNICODE_COLLATION
 OPTIONS_DEFAULT=	BIBUTILS
 
@@ -24,8 +26,6 @@ UNICODE_COLLATION_DESC=		Use bindings to the Internationl Components for Unicode
 UNICODE_COLLATION_CABAL_FLAGS=	unicode_collation
 UNICODE_COLLATION_USE_CABAL=	text-icu-0.7.0.1
 UNICODE_COLLATION_LIB_DEPENDS=	libicui18n.so:devel/icu
-
-CABAL_FLAGS=	-test_citeproc -debug
 
 USE_CABAL=	Glob-0.10.0 HsYAML-0.1.1.3 JuicyPixels-3.3.3_1 \
 		QuickCheck-2.12.6.1_1 SHA-1.6.4.4 aeson-1.4.2.0_1 \
@@ -63,5 +63,6 @@ USE_CABAL=	Glob-0.10.0 HsYAML-0.1.1.3 JuicyPixels-3.3.3_1 \
 		x509-validation-1.6.11 xml-1.3.14 xml-conduit-1.8.0.1 \
 		xml-types-0.3.6 yaml-0.11.0.0
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
+CABAL_FLAGS=	-test_citeproc -debug
+
 .include <bsd.port.mk>

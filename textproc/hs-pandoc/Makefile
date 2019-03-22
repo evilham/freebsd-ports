@@ -10,6 +10,8 @@ COMMENT=	Conversion between markup formats
 
 LICENSE=	GPLv2
 
+USES=		cabal
+
 OPTIONS_DEFINE=		EMBED_DATA TRYPANDOC
 
 EMBED_DATA_DESC=	Embed data files in binary for relocatable executable
@@ -25,8 +27,6 @@ TRYPANDOC_USE_CABAL=	appar-0.1.7 auto-update-0.1.4 byteorder-1.0.4 \
 			unliftio-core-0.1.2.0_1 vault-0.3.1.2 void-0.7.2 wai-3.2.2 \
 			wai-extra-3.0.25 wai-logger-2.3.4 word8-0.1.3
 TRYPANDOC_EXECUTABLES=	trypandoc
-
-CABAL_FLAGS=	-static derive_json_via_th
 
 USE_CABAL=	Glob-0.10.0 HsYAML-0.1.1.3 JuicyPixels-3.3.3_1 \
 		QuickCheck-2.12.6.1_1 SHA-1.6.4.4 aeson-1.4.2.0_1 \
@@ -59,8 +59,9 @@ USE_CABAL=	Glob-0.10.0 HsYAML-0.1.1.3 JuicyPixels-3.3.3_1 \
 		x509-1.7.5 x509-store-1.6.7 x509-system-1.6.6 \
 		x509-validation-1.6.11 xml-1.3.14
 
+CABAL_FLAGS=	-static derive_json_via_th
+
 post-install:
 	${INSTALL_MAN} ${WRKSRC}/man/pandoc.1 ${STAGEDIR}${MAN1PREFIX}/man/man1
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>

@@ -10,8 +10,7 @@ COMMENT=	WAI application for static serving
 
 LICENSE=	MIT
 
-EXECUTABLES=	warp
-BUILD_TARGET=	exe:warp
+USES=		cabal
 
 USE_CABAL=	aeson-1.4.2.0_1 ansi-terminal-0.9 ansi-wl-pprint-0.6.8.2_1 \
 		appar-0.1.7 attoparsec-0.13.2.2 auto-update-0.1.4 \
@@ -35,5 +34,6 @@ USE_CABAL=	aeson-1.4.2.0_1 ansi-terminal-0.9 ansi-wl-pprint-0.6.8.2_1 \
 		wai-3.2.2 wai-extra-3.0.25 wai-logger-2.3.4 warp-3.2.26 \
 		word8-0.1.3
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
+EXECUTABLES=	warp
+
 .include <bsd.port.mk>

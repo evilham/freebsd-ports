@@ -10,6 +10,8 @@ COMMENT=	Produces ctags "tags" and etags "TAGS" files for Haskell programs
 
 LICENSE=	BSD3CLAUSE
 
+USES=		cabal
+
 USE_CABAL=	ansi-terminal-0.9 ansi-wl-pprint-0.6.8.2_1 colour-2.3.4 json-0.9.3 \
 		microlens-0.4.10 microlens-ghc-0.4.10 microlens-mtl-0.1.11.1 \
 		microlens-platform-0.3.11 microlens-th-0.4.2.3 \
@@ -17,5 +19,4 @@ USE_CABAL=	ansi-terminal-0.9 ansi-wl-pprint-0.6.8.2_1 colour-2.3.4 json-0.9.3 \
 		th-abstraction-0.2.10.0 transformers-compat-0.6.2 \
 		unordered-containers-0.2.10.0 utf8-string-1.0.1.1_3 vector-0.12.0.2
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>

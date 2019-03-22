@@ -11,7 +11,8 @@ COMMENT=	Liberalised re-implementation of cpp, the C pre-processor
 
 LICENSE=	LGPL21
 
+USES=		cabal
+
 USE_CABAL=	polyparse-1.12.1
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>

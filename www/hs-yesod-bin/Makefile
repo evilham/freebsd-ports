@@ -11,7 +11,7 @@ COMMENT=	Yesod helper executable
 LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
-EXECUTABLES=	yesod
+USES=		cabal
 
 USE_CABAL=	aeson-1.4.2.0_1 ansi-terminal-0.9 ansi-wl-pprint-0.6.8.2_1 \
 		appar-0.1.7 asn1-encoding-0.9.5 asn1-parse-0.9.4 \
@@ -44,5 +44,6 @@ USE_CABAL=	aeson-1.4.2.0_1 ansi-terminal-0.9 ansi-wl-pprint-0.6.8.2_1 \
 		word8-0.1.3 x509-1.7.5 x509-store-1.6.7 x509-system-1.6.6 \
 		x509-validation-1.6.11 yaml-0.11.0.0
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
+EXECUTABLES=	yesod
+
 .include <bsd.port.mk>

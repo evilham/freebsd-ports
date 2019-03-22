@@ -11,6 +11,8 @@ COMMENT=	Haskell API Search
 
 LICENSE=	BSD3CLAUSE
 
+USES=		cabal
+
 USE_CABAL=	ListLike-4.6_2 QuickCheck-2.12.6.1_1 aeson-1.4.2.0_1 appar-0.1.7 \
 		asn1-encoding-0.9.5 asn1-parse-0.9.4 asn1-types-0.3.2 \
 		attoparsec-0.13.2.2 auto-update-0.1.4 base-compat-0.10.5 \
@@ -48,5 +50,4 @@ USE_CABAL=	ListLike-4.6_2 QuickCheck-2.12.6.1_1 aeson-1.4.2.0_1 appar-0.1.7 \
 		word8-0.1.3 x509-1.7.5 x509-store-1.6.7 x509-system-1.6.6 \
 		x509-validation-1.6.11
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>

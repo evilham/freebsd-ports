@@ -12,6 +12,8 @@ COMMENT=	Colourise Haskell code
 
 LICENSE=	GPLv2
 
+USES=		cabal
+
 EXECUTABLES=	HsColour
 
 .include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"

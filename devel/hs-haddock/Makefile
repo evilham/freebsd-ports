@@ -11,6 +11,8 @@ COMMENT=	Documentation-generation tool for Haskell libraries
 
 LICENSE=	BSD3CLAUSE
 
+USES=		cabal
+
 USE_CABAL=	ghc-paths-0.1.0.9_4 haddock-api-2.21.0 haddock-library-1.7.0
 
 GHC_HADDOCK_CMD=	${LOCALBASE}/bin/haddock-ghc-${GHC_VERSION}
@@ -26,5 +28,4 @@ post-stage:
 post-install-script:
 	${ECHO_CMD} 'bin/haddock-${PORTVERSION}' >> ${TMPPLIST}
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>
