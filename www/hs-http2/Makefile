@@ -10,7 +10,9 @@ COMMENT=	HTTP/2.0 library including frames and HPACK
 
 LICENSE=	BSD3CLAUSE
 
-USE_CABAL=	aeson aeson-pretty case-insensitive hex mwc-random psqueues \
+BROKEN=		Doesn't build after overhaul
+
+USE_CABAL=	aeson case-insensitive hex mwc-random psqueues \
 		unordered-containers vector word8
 
 FLAGS_DISABLE=	devel

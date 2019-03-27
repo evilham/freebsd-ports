@@ -13,6 +13,6 @@ LICENSE=	LGPL21
 
 USES=		cabal
 
-USE_CABAL=	polyparse-1.12.1
+USE_CABAL=	old-locale-1.0.0.7_2 old-time-1.1.0.3_2 polyparse-1.12.1
 
 .include <bsd.port.mk>

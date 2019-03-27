@@ -1,4 +1,4 @@
-TIMESTAMP = 1550341308
+TIMESTAMP = 1553366923
 SHA256 (cabal/mueval-0.9.3.tar.gz) = f72a8bbaffecaeb55b67d78011e182073be8ba9f4a90824903e4c78cfe6e1ef7
 SIZE (cabal/mueval-0.9.3.tar.gz) = 16085
 SHA256 (cabal/QuickCheck-2.12.6.1/QuickCheck-2.12.6.1.tar.gz) = 0b2aa7f5c625b5875c36f5f548926fcdaedf4311bd3a4c291fcf10b8d7faa170
@@ -23,6 +23,10 @@ SHA256 (cabal/primitive-0.6.4.0/primitive-0.6.4.0.tar.gz) = 4cbeaf7924dd79221f32
 SIZE (cabal/primitive-0.6.4.0/primitive-0.6.4.0.tar.gz) = 45937
 SHA256 (cabal/primitive-0.6.4.0/revision/1.cabal) = 5b6a2c3cc70a35aabd4565fcb9bb1dd78fe2814a36e62428a9a1aae8c32441a1
 SIZE (cabal/primitive-0.6.4.0/revision/1.cabal) = 2079
+SHA256 (cabal/random-1.1/random-1.1.tar.gz) = b718a41057e25a3a71df693ab0fe2263d492e759679b3c2fea6ea33b171d3a5a
+SIZE (cabal/random-1.1/random-1.1.tar.gz) = 10870
+SHA256 (cabal/random-1.1/revision/1.cabal) = 7b67624fd76ddf97c206de0801dc7e888097e9d572974be9b9ea6551d76965df
+SIZE (cabal/random-1.1/revision/1.cabal) = 1777
 SHA256 (cabal/show-0.6/show-0.6.tar.gz) = 4f57a947a538d021406f649049dde27d4d8d0b44aac3ba38fa64806c9d737b95
 SIZE (cabal/show-0.6/show-0.6.tar.gz) = 7635
 SHA256 (cabal/simple-reflect-0.3.3/simple-reflect-0.3.3.tar.gz) = 07825ea04c135298008cf080133e3bfc8e04cbacd24719c46ac6a2ca4acfdb2b

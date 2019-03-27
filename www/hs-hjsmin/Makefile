@@ -10,6 +10,8 @@ COMMENT=	Haskell implementation of a javascript minifier
 
 LICENSE=	BSD3CLAUSE
 
+BUILD_DEPENDS=	happy:devel/hs-happy
+
 USES=		cabal
 
 USE_CABAL=	alex-3.2.4 ansi-terminal-0.9 ansi-wl-pprint-0.6.8.2_1 \

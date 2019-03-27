@@ -16,5 +16,4 @@ USES=		cabal
 
 EXECUTABLES=	HsColour
 
-.include "${.CURDIR}/../../lang/ghc/bsd.new-cabal.mk"
 .include <bsd.port.mk>
