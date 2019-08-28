@@ -49,9 +49,7 @@ DYNAMIC_DESC=		Add support for dynamic linking
 GMP_DESC=		Use GNU Multi-precision Library for big integers support
 PROFILE_DESC=		Add support for performance profiling
 
-DOCS_BUILD_DEPENDS+=	sphinx-build:textproc/py-sphinx
-DOCS_SUB_LIST=		WITH_DOCS="YES"
-DOCS_SUB_LIST_OFF=	WITH_DOCS="NO"
+DOCS_BUILD_DEPENDS=	sphinx-build:textproc/py-sphinx
 
 DYNAMIC_CONFIGURE_WITH=	system-libffi \
 			ffi-includes=${LOCALBASE}/include \
@@ -128,11 +126,9 @@ _EXECUTABLES=	${GHC_LIBDIR}/bin/unlit \
 		${GHC_LIBDIR}/bin/hsc2hs \
 		${GHC_LIBDIR}/bin/runghc \
 		${GHC_LIBDIR}/bin/ghc \
+		${GHC_LIBDIR}/bin/haddock \
 		${GHC_LIBDIR}/bin/hp2ps
 
-.if ${PORT_OPTIONS:MDOCS}
-_EXECUTABLES+=	${GHC_LIBDIR}/bin/haddock
-.endif
 .if ${PORT_OPTIONS:MPROFILE}
 _EXECUTABLES+=	${GHC_LIBDIR}/bin/ghc-iserv-prof
 .endif
@@ -216,13 +212,14 @@ post-install-script:
 		-e 's,^${STAGEDIR}${PREFIX}/?,,' \
 		-e '/^${GHC_LIBDIR:C/\//\\\//g}\/package.conf.d\/package\.cache/s|^|@comment |g' \
 		>> ${TMPPLIST}
+.if ${PORT_OPTIONS:MDOCS}
 	${FIND} -ds ${STAGEDIR}${DOCSDIR} -type f -print | ${SED} -E \
 		-e 's,^${STAGEDIR}${PREFIX}/?,,' \
 		-e '/^${STAGEDIR:C/\//\\\//g}${DOCSDIR:C/\//\\\//g}\/html\/libraries\/doc-index-[^.]+\.html/s|^|@comment |g' \
 		-e '/^${STAGEDIR:C/\//\\\//g}${DOCSDIR:C/\//\\\//g}\/html\/libraries\/index[^\/.]*\.html/s|^|@comment|g' \
 		-e '/^${STAGEDIR:C/\//\\\//g}${DOCSDIR:C/\//\\\//g}\/html\/libraries\/[^\/]+\.png/s|^|@comment |g' \
 		>> ${TMPPLIST}
-.if ${PORT_OPTIONS:MDOCS}
+
 	# Cleanup the indexen created by gen_contents_index
 	${ECHO} "@postunexec ${RM} %D/${DOCSDIR_REL}/html/libraries/doc-index-*.html" >> ${TMPPLIST}
 	${ECHO} "@postunexec ${RM} %D/${DOCSDIR_REL}/html/libraries/index*.html" >> ${TMPPLIST}
@@ -293,9 +290,7 @@ pre-configure: apply-slist
 post-install:
 	(for f in ${_EXECUTABLES} $$(${FIND} ${GHC_LIBDIR} -name '*.so*'); do \
 		${STRIP_CMD} $$f; done)
-.if ${PORT_OPTIONS:MDOCS}
-	${MV} ${STAGEDIR}${PREFIX}/bin/haddock ${STAGEDIR}${PREFIX}/bin/haddock-ghc-${GHC_VERSION}
-.endif
+	${RM} ${STAGEDIR}${PREFIX}/bin/haddock
 
 # Create a bootstrap compiler tar ball: run this in an interactive poudriere jail
 .PHONY: create-bootstrap
