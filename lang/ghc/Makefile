@@ -3,7 +3,6 @@
 
 PORTNAME=	ghc
 PORTVERSION=	${GHC_VERSION}
-PORTREVISION=	3
 CATEGORIES=	lang haskell
 MASTER_SITES=	https://www.haskell.org/ghc/dist/${PORTVERSION}/:source \
 		LOCAL/arrowd/:boot \
@@ -73,7 +72,7 @@ PROFILE_SUB_LIST=	WITH_PROFILE="YES"
 PROFILE_SUB_LIST_OFF=	WITH_PROFILE="NO"
 
 GHC_VERSION?=		${GHC_VERSION_DEFAULT}
-GHC_VERSION_DEFAULT=	8.6.5
+GHC_VERSION_DEFAULT=	8.8.1
 GHC_VERSION_MAJOR=	${GHC_VERSION:S/./ /g:[1]}
 GHC_VERSION_MINOR=	${GHC_VERSION:S/./ /g:[2]}
 
@@ -186,10 +185,16 @@ BOOT_HSC2HS=	${BOOT_DIR}/bin/hsc2hs
 
 SLAVE_ENV=	${SETENV} PATH=${BOOT_DIR}/bin:${PATH}
 
+CONFIGURE_ENV+=		GHC=${BOOT_GHC}
+.  if ${GHC_VERSION_MAJOR} >= 8 && ${GHC_VERSION_MINOR} < 8
 CONFIGURE_ARGS+=	--with-ghc=${BOOT_GHC}
+.  endif
 .else # MBOOT
 SLAVE_ENV=		# empty
+CONFIGURE_ENV+=		GHC=${LOCALBASE}/bin/ghc
+.  if ${GHC_VERSION_MAJOR} >= 8 && ${GHC_VERSION_MINOR} < 8
 CONFIGURE_ARGS+=	--with-ghc=${LOCALBASE}/bin/ghc
+.  endif
 .endif # MBOOT
 
 # override TMPDIR because /tmp often doesn't have enough space
