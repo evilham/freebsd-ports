@@ -85,6 +85,10 @@ _USES_stage=	751:cabal-post-install-script
 
 BUILD_TARGET?=	${EXECUTABLES:S/^/exe:&/}
 
+.  if defined(USE_LOCALE)
+LOCALE_ENV=	LANG=${USE_LOCALE} LC_ALL=${USE_LOCALE}
+.  endif
+
 _use_cabal=	${USE_CABAL:O:u}
 
 .  for package in ${_use_cabal}
@@ -110,7 +114,7 @@ cabal-extract: ${WRKDIR}
 	${RM} -rf ${CABAL_HOME}/.cabal
 	${SETENV} HOME=${CABAL_HOME} cabal new-update
 	cd ${WRKDIR} && \
-		${SETENV} HOME=${CABAL_HOME} cabal get ${PORTNAME}-${PORTVERSION}
+		${SETENV} ${LOCALE_ENV} HOME=${CABAL_HOME} cabal get ${PORTNAME}-${PORTVERSION}
 
 # Fetches and unpacks dependencies sources for a cabal-extract'ed package.
 # Builds them as side-effect.
@@ -119,9 +123,9 @@ cabal-extract-deps:
 	cd ${WRKSRC} && ${SETENV} HOME=${CABAL_HOME} hpack
 .  endif
 	cd ${WRKSRC} && \
-		${SETENV} HOME=${CABAL_HOME} cabal new-configure --flags="${CABAL_FLAGS}" ${CONFIGURE_ARGS}
+		${SETENV} ${LOCALE_ENV} HOME=${CABAL_HOME} cabal new-configure --flags="${CABAL_FLAGS}" ${CONFIGURE_ARGS}
 	cd ${WRKSRC} && \
-		${SETENV} HOME=${CABAL_HOME} cabal new-build --dependencies-only
+		${SETENV} ${LOCALE_ENV} HOME=${CABAL_HOME} cabal new-build --dependencies-only
 
 # Generates USE_CABAL= ... line ready to be pasted into the port based on artifacts of cabal-extract-deps.
 make-use-cabal:
@@ -141,7 +145,7 @@ make-use-cabal-revs:
 cabal-post-extract:
 .    for package in ${_use_cabal}
 .      if ${package:C/[^_]*//:S/_//} != ""
-		cp ${DISTDIR}/${DIST_SUBDIR}/${package:C/_[0-9]+//}/revision/${package:C/[^_]*//:S/_//}.cabal `find ${WRKDIR}/${package:C/_[0-9]+//} -name *.cabal -depth 1`
+		cp ${DISTDIR}/${DIST_SUBDIR}/${package:C/_[0-9]+//}/revision/${package:C/[^_]*//:S/_//}.cabal `find ${WRKDIR}/${package:C/_[0-9]+//} -name '*.cabal' -depth 1`
 .      endif
 	cd ${WRKDIR} && \
 		mv ${package:C/_[0-9]+//} ${WRKSRC}/
